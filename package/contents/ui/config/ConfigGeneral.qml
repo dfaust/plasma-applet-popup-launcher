@@ -73,7 +73,7 @@ Item {
                         delegate: Item {
                             id: appItem
                             width: parent.width
-                            height: units.iconSizes.small + 10
+                            height: units.iconSizes.small + 2*units.smallSpacing
 
                             property bool isHovered: false
                             property bool isUpHovered: false
@@ -94,8 +94,8 @@ Item {
                                 }
 
                                 RowLayout {
-                                    x: 5
-                                    y: 5
+                                    x: units.smallSpacing
+                                    y: units.smallSpacing
 
                                     Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
                                         height: units.iconSizes.small
@@ -117,7 +117,7 @@ Item {
 
                                 Rectangle {
                                     height: units.iconSizes.small
-                                    width: 3*units.iconSizes.small + 4*5
+                                    width: 3*units.iconSizes.small + 4*units.smallSpacing
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
                                     visible: isHovered
@@ -129,8 +129,8 @@ Item {
                                     Behavior on opacity { NumberAnimation { duration: units.shortDuration * 3 } }
 
                                     RowLayout {
-                                        x: 5
-                                        spacing: 5
+                                        x: units.smallSpacing
+                                        spacing: units.smallSpacing
 
                                         Item {
                                             id: upIcon
@@ -257,7 +257,7 @@ Item {
 
         SpinBox {
             id: widgetWidth
-            minimumValue: units.iconSizes.medium + 10
+            minimumValue: units.iconSizes.medium + 2*units.smallSpacing
             maximumValue: 1000
             decimals: 0
             stepSize: 10

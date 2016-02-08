@@ -22,8 +22,10 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kio 1.0 as Kio
 
 Item {
+    property var mediumSpacing: 1.5*units.smallSpacing
+
     Layout.minimumWidth: widgetWidth
-    Layout.minimumHeight: (units.iconSizes.small + 15) * listView.count - 5
+    Layout.minimumHeight: (units.iconSizes.smallMedium + 2*mediumSpacing) * listView.count
 
     Layout.maximumWidth: Layout.minimumWidth
     Layout.maximumHeight: Layout.minimumHeight
@@ -61,7 +63,6 @@ Item {
         ListView {
             id: listView
             anchors.fill: parent
-            spacing: 5
 
             model: apps
 
@@ -72,7 +73,7 @@ Item {
             delegate: Item {
                 id: appItem
                 width: parent.width
-                height: units.iconSizes.small + 10
+                height: units.iconSizes.smallMedium + 2*mediumSpacing
 
                 property bool isHovered: false
 
@@ -94,11 +95,12 @@ Item {
                     }
 
                     RowLayout {
-                        x: 5
-                        y: 5
+                        x: mediumSpacing
+                        y: mediumSpacing
+                        spacing: mediumSpacing
 
                         Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
-                            height: units.iconSizes.small
+                            height: units.iconSizes.smallMedium
                             width: height
 
                             PlasmaCore.IconItem {

@@ -76,7 +76,7 @@ PlasmaComponents.Dialog {
                     delegate: Item {
                         id: appItem
                         width: parent.width
-                        height: units.iconSizes.small + 10
+                        height: units.iconSizes.small + 2*units.smallSpacing
 
                         property bool isHovered: false
 
@@ -99,8 +99,8 @@ PlasmaComponents.Dialog {
                             }
 
                             RowLayout {
-                                x: 5
-                                y: 5
+                                x: units.smallSpacing
+                                y: units.smallSpacing
 
                                 Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
                                     height: units.iconSizes.small
