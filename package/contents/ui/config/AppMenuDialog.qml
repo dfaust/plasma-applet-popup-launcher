@@ -19,10 +19,11 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 PlasmaComponents.Dialog {
     id: appMenuDialog
-    
+
     property string selectedMenuId: null
         
     PlasmaCore.DataSource {
@@ -30,7 +31,7 @@ PlasmaComponents.Dialog {
         engine: 'apps'
         connectedSources: sources
     }
-    
+
     content: Item {
         id: contentItem
         width: 300
@@ -39,12 +40,12 @@ PlasmaComponents.Dialog {
 //         RowLayout {
 //             anchors.left: parent.left
 //             anchors.right: parent.right
-//             
+//
 //             Label {
 //                 id: filterLabel
 //                 text: i18n('Filter:')
 //             }
-//             
+//
 //             TextField {
 //                 id: filter
 //                 anchors.left: filterLabel.right
@@ -60,66 +61,70 @@ PlasmaComponents.Dialog {
 //             height: parent.height - filter.height - units.smallSpacing
             height: parent.height
 
-            ListView {
-                id: apps
+            PlasmaExtras.ScrollArea {
                 anchors.fill: parent
-                clip: true
 
-                highlight: PlasmaComponents.Highlight {}
-                highlightMoveDuration: 0
-                highlightResizeDuration: 0
-                
-                delegate: Item {
-                    id: appItem
-                    width: parent.width
-                    height: units.iconSizes.small + 10
+                ListView {
+                    id: apps
+                    anchors.fill: parent
+                    clip: true
 
-                    property bool isHovered: false
+                    highlight: PlasmaComponents.Highlight {}
+                    highlightMoveDuration: 0
+                    highlightResizeDuration: 0
 
-                    MouseArea {
-                        id: container
-                        anchors.fill: parent
+                    delegate: Item {
+                        id: appItem
+                        width: parent.width
+                        height: units.iconSizes.small + 10
 
-                        hoverEnabled: true
-                        onEntered: {
-                            apps.currentIndex = index
-                            isHovered = true
-                        }
-                        onExited: {
-                            isHovered = false
-                        }
-                        
-                        onClicked: {
-                            selectedMenuId = modelData
-                            appMenuDialog.accept()
-                        }
+                        property bool isHovered: false
 
-                        RowLayout {
-                            x: 5
-                            y: 5
+                        MouseArea {
+                            id: container
+                            anchors.fill: parent
 
-                            Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
-                                height: units.iconSizes.small
-                                width: height
-
-                                PlasmaCore.IconItem {
-                                    anchors.fill: parent
-                                    source: appsSource.data[modelData].iconName
-                                    active: isHovered
-                                }
+                            hoverEnabled: true
+                            onEntered: {
+                                apps.currentIndex = index
+                                isHovered = true
+                            }
+                            onExited: {
+                                isHovered = false
                             }
 
-                            PlasmaComponents.Label {
-                                text: appsSource.data[modelData].name
-                                height: parent.height
-                                verticalAlignment: Text.AlignVCenter
+                            onClicked: {
+                                selectedMenuId = modelData
+                                appMenuDialog.accept()
+                            }
+
+                            RowLayout {
+                                x: 5
+                                y: 5
+
+                                Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
+                                    height: units.iconSizes.small
+                                    width: height
+
+                                    PlasmaCore.IconItem {
+                                        anchors.fill: parent
+                                        source: appsSource.data[modelData].iconName
+                                        active: isHovered
+                                    }
+                                }
+
+                                PlasmaComponents.Label {
+                                    text: appsSource.data[modelData].name
+                                    height: parent.height
+                                    verticalAlignment: Text.AlignVCenter
+                                }
                             }
                         }
                     }
-                }
 
-                Component.onCompleted: {
-                    model = listMenuEntries('/')
+                    Component.onCompleted: {
+                        model = listMenuEntries('/')
+                    }
                 }
             }
         }
@@ -135,10 +140,10 @@ PlasmaComponents.Dialog {
             }
         }
     }
-    
+
     function listMenuEntries(menuId) {
         var m = []
-        
+
         for (var i = 0; i < appsSource.data[menuId].entries.length; i++) {
             var entry = appsSource.data[menuId].entries[i]
             if (/\.desktop$/.test(entry)) {
@@ -147,7 +152,7 @@ PlasmaComponents.Dialog {
                 m = m.concat(listMenuEntries(entry))
             }
         }
-        
+
         return m
     }
 }

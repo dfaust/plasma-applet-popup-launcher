@@ -20,12 +20,13 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
     property alias cfg_icon: icon.text
     property var cfg_apps: []
     property alias cfg_widgetWidth: widgetWidth.value
-    
+
     PlasmaCore.DataSource {
         id: appsSource
         engine: 'apps'
@@ -61,165 +62,169 @@ Item {
                 width: 200
                 height: 200
 
-                ListView {
-                    id: apps
+                PlasmaExtras.ScrollArea {
                     anchors.fill: parent
-                    clip: true
-                    
-                    delegate: Item {
-                        id: appItem
-                        width: parent.width
-                        height: units.iconSizes.small + 10
 
-                        property bool isHovered: false
-                        property bool isUpHovered: false
-                        property bool isDownHovered: false
-                        property bool isRemoveHovered: false
+                    ListView {
+                        id: apps
+                        anchors.fill: parent
+                        clip: true
 
-                        MouseArea {
-                            id: container
-                            anchors.fill: parent
+                        delegate: Item {
+                            id: appItem
+                            width: parent.width
+                            height: units.iconSizes.small + 10
 
-                            hoverEnabled: true
-                            onEntered: {
-                                apps.currentIndex = index
-                                isHovered = true
-                            }
-                            onExited: {
-                                isHovered = false
-                            }
+                            property bool isHovered: false
+                            property bool isUpHovered: false
+                            property bool isDownHovered: false
+                            property bool isRemoveHovered: false
 
-                            RowLayout {
-                                x: 5
-                                y: 5
+                            MouseArea {
+                                id: container
+                                anchors.fill: parent
 
-                                Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
-                                    height: units.iconSizes.small
-                                    width: height
-
-                                    PlasmaCore.IconItem {
-                                        anchors.fill: parent
-                                        source: appsSource.data[modelData].iconName
-                                        active: isHovered
-                                    }
+                                hoverEnabled: true
+                                onEntered: {
+                                    apps.currentIndex = index
+                                    isHovered = true
                                 }
-
-                                PlasmaComponents.Label {
-                                    text: appsSource.data[modelData].name
-                                    height: parent.height
-                                    verticalAlignment: Text.AlignVCenter
+                                onExited: {
+                                    isHovered = false
                                 }
-                            }
-
-                            Rectangle {
-                                height: units.iconSizes.small
-                                width: 3*units.iconSizes.small + 4*5
-                                anchors.right: parent.right
-                                anchors.verticalCenter: parent.verticalCenter
-                                visible: isHovered
-                                
-                                radius: units.iconSizes.small / 4
-                                color: 'white'
-                                opacity: 0.8
-
-                                Behavior on opacity { NumberAnimation { duration: units.shortDuration * 3 } }
 
                                 RowLayout {
                                     x: 5
-                                    spacing: 5
-                                    
-                                    Item {
-                                        id: upIcon
+                                    y: 5
+
+                                    Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
                                         height: units.iconSizes.small
                                         width: height
-                                        opacity: 1.0
-                                        
+
                                         PlasmaCore.IconItem {
                                             anchors.fill: parent
-                                            source: 'arrow-up'
-                                            active: isUpHovered
-                                            
-                                            MouseArea {
-                                                anchors.fill: parent
-
-                                                hoverEnabled: true
-                                                onEntered: {
-                                                    isUpHovered = true
-                                                }
-                                                onExited: {
-                                                    isUpHovered = false
-                                                }
-
-                                                onClicked: {
-                                                    var m = moveUp(apps.model, modelData)
-                                                    cfg_apps = m
-                                                    apps.model = m
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    Item {
-                                        id: downIcon
-                                        height: units.iconSizes.small
-                                        width: height
-                                        opacity: 1.0
-                                        
-                                        PlasmaCore.IconItem {
-                                            anchors.fill: parent
-                                            source: 'arrow-down'
-                                            active: isDownHovered
-
-                                            MouseArea {
-                                                anchors.fill: parent
-
-                                                hoverEnabled: true
-                                                onEntered: {
-                                                    isDownHovered = true
-                                                }
-                                                onExited: {
-                                                    isDownHovered = false
-                                                }
-
-                                                onClicked: {
-                                                    var m = moveDown(apps.model, modelData)
-                                                    cfg_apps = m
-                                                    apps.model = m
-                                                }
-                                            }
+                                            source: appsSource.data[modelData].iconName
+                                            active: isHovered
                                         }
                                     }
 
-                                    Item {
-                                        id: removeIcon
-                                        height: units.iconSizes.small
-                                        width: height
-                                        opacity: 1.0
-                                            
-                                        PlasmaCore.IconItem {
-                                            anchors.fill: parent
-                                            source: 'remove'
-                                            active: isRemoveHovered
+                                    PlasmaComponents.Label {
+                                        text: appsSource.data[modelData].name
+                                        height: parent.height
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+                                }
 
-                                            MouseArea {
+                                Rectangle {
+                                    height: units.iconSizes.small
+                                    width: 3*units.iconSizes.small + 4*5
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: isHovered
+
+                                    radius: units.iconSizes.small / 4
+                                    color: 'white'
+                                    opacity: 0.8
+
+                                    Behavior on opacity { NumberAnimation { duration: units.shortDuration * 3 } }
+
+                                    RowLayout {
+                                        x: 5
+                                        spacing: 5
+
+                                        Item {
+                                            id: upIcon
+                                            height: units.iconSizes.small
+                                            width: height
+                                            opacity: 1.0
+
+                                            PlasmaCore.IconItem {
                                                 anchors.fill: parent
+                                                source: 'arrow-up'
+                                                active: isUpHovered
 
-                                                hoverEnabled: true
-                                                onEntered: {
-                                                    isRemoveHovered = true
-                                                }
-                                                onExited: {
-                                                    isRemoveHovered = false
-                                                }
+                                                MouseArea {
+                                                    anchors.fill: parent
 
-                                                onClicked: {
-                                                    var m = apps.model
-                                                    var i = null
-                                                    while ((i = m.indexOf(modelData)) !== -1) {
-                                                        m.splice(i, 1)
+                                                    hoverEnabled: true
+                                                    onEntered: {
+                                                        isUpHovered = true
                                                     }
-                                                    cfg_apps = m
-                                                    apps.model = m
+                                                    onExited: {
+                                                        isUpHovered = false
+                                                    }
+
+                                                    onClicked: {
+                                                        var m = moveUp(apps.model, modelData)
+                                                        cfg_apps = m
+                                                        apps.model = m
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        Item {
+                                            id: downIcon
+                                            height: units.iconSizes.small
+                                            width: height
+                                            opacity: 1.0
+
+                                            PlasmaCore.IconItem {
+                                                anchors.fill: parent
+                                                source: 'arrow-down'
+                                                active: isDownHovered
+
+                                                MouseArea {
+                                                    anchors.fill: parent
+
+                                                    hoverEnabled: true
+                                                    onEntered: {
+                                                        isDownHovered = true
+                                                    }
+                                                    onExited: {
+                                                        isDownHovered = false
+                                                    }
+
+                                                    onClicked: {
+                                                        var m = moveDown(apps.model, modelData)
+                                                        cfg_apps = m
+                                                        apps.model = m
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        Item {
+                                            id: removeIcon
+                                            height: units.iconSizes.small
+                                            width: height
+                                            opacity: 1.0
+
+                                            PlasmaCore.IconItem {
+                                                anchors.fill: parent
+                                                source: 'remove'
+                                                active: isRemoveHovered
+
+                                                MouseArea {
+                                                    anchors.fill: parent
+
+                                                    hoverEnabled: true
+                                                    onEntered: {
+                                                        isRemoveHovered = true
+                                                    }
+                                                    onExited: {
+                                                        isRemoveHovered = false
+                                                    }
+
+                                                    onClicked: {
+                                                        var m = apps.model
+                                                        var i = null
+                                                        while ((i = m.indexOf(modelData)) !== -1) {
+                                                            m.splice(i, 1)
+                                                        }
+                                                        cfg_apps = m
+                                                        apps.model = m
+                                                    }
                                                 }
                                             }
                                         }
@@ -227,10 +232,10 @@ Item {
                                 }
                             }
                         }
-                    }
 
-                    Component.onCompleted: {
-                        model = plasmoid.configuration.apps
+                        Component.onCompleted: {
+                            model = plasmoid.configuration.apps
+                        }
                     }
                 }
             }
@@ -279,30 +284,30 @@ Item {
             apps.model = m
         }
     }
-    
+
    function moveUp(m, value) {
         var index = m.indexOf(value)
         var newPos = index - 1
-        
-        if (newPos < 0) 
+
+        if (newPos < 0)
             newPos = 0
-            
+
         m.splice(index, 1)
         m.splice(newPos, 0, value)
-        
+
         return m
     }
 
     function moveDown(m, value) {
         var index = m.indexOf(value)
         var newPos = index + 1
-        
-        if (newPos >= m.length) 
+
+        if (newPos >= m.length)
             newPos = m.length
-        
+
         m.splice(index, 1)
         m.splice(newPos, 0, value)
-        
+
         return m
     }
 }
