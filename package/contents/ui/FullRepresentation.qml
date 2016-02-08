@@ -36,8 +36,6 @@ Item {
         for (var i in appsSource.sources) {
             appsSource.sourceAdded(appsSource.sources[i]);
         }
-        console.log('units.iconSizes.small:  ' + units.iconSizes.small)
-        console.log('units.iconSizes.medium: ' + units.iconSizes.medium)
     }
     
     PlasmaCore.DataSource {
@@ -46,12 +44,10 @@ Item {
 
         onSourceAdded: {
             connectSource(source)
-            console.log('Source added: ' + source)
         }
 
         onSourceRemoved: {
             disconnectSource(source);
-            console.log('Source removed: ' + source)
         }
     }
     
