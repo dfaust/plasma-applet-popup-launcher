@@ -91,6 +91,7 @@ Item {
                     }
 
                     onClicked: {
+                        plasmoid.expanded = false
                         kRun.openUrl(appsSource.data[modelData].entryPath)
                     }
 
