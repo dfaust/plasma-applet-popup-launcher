@@ -6,6 +6,9 @@
     <kcfgfile name=""/>
 
     <group name="General">
+        <entry name="title" type="String">
+            <default>Popup Launcher</default>
+        </entry>
         <entry name="icon" type="String">
             <default>system-run</default>
         </entry>

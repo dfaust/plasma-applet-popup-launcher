@@ -23,6 +23,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
+    property alias cfg_title: title.text
     property alias cfg_icon: icon.text
     property var cfg_apps: []
     property alias cfg_widgetWidth: widgetWidth.value
@@ -37,6 +38,14 @@ Item {
         columns: 2
 
         PlasmaComponents.Label {
+            text: i18n('Title:')
+        }
+
+        TextField {
+            id: title
+        }
+
+        PlasmaComponents.Label {
             text: i18n('Icon:')
         }
 
@@ -44,7 +53,7 @@ Item {
             TextField {
                 id: icon
             }
-            
+
             PlasmaComponents.Button {
                 iconSource: 'folder'
                 onClicked: {
