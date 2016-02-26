@@ -2,6 +2,7 @@
 Plasma 5 custom application launcher that opens a popup when placed in a panel
 
 # Depends on
+plasma-workspace >= 5.6  
 plasma-framework-devel
 
 # Installation
