@@ -70,6 +70,7 @@ Item {
             Rectangle {
                 width: 200
                 height: 200
+                color: theme.viewBackgroundColor
 
                 PlasmaExtras.ScrollArea {
                     anchors.fill: parent
@@ -132,7 +133,7 @@ Item {
                                     visible: isHovered
 
                                     radius: units.iconSizes.small / 4
-                                    color: 'white'
+                                    color: theme.viewBackgroundColor
                                     opacity: 0.8
 
                                     Behavior on opacity { NumberAnimation { duration: units.shortDuration * 3 } }
