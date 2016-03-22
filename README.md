@@ -3,10 +3,10 @@ Plasma 5 custom application launcher that opens a popup when placed in a panel
 
 ![Screen shot of plasma-applet-popup-launcher](popup-launcher.png)
 
-# Depends on
+## Depends on
 plasma-framework-devel
 
-# Installation
+## Installation
 ```
 git clone https://github.com/HessiJames/plasma-applet-popup-launcher
 cd plasma-applet-popup-launcher
