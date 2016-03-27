@@ -22,10 +22,11 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kio 1.0 as Kio
 
 Item {
-    property var mediumSpacing: 1.5*units.smallSpacing
+    property real mediumSpacing: 1.5*units.smallSpacing
+    property real itemHeight: Math.max(units.iconSizes.smallMedium, theme.defaultFont.pixelSize)
 
     Layout.minimumWidth: widgetWidth
-    Layout.minimumHeight: (units.iconSizes.smallMedium + 2*mediumSpacing) * listView.count
+    Layout.minimumHeight: (itemHeight + 2*mediumSpacing) * listView.count
 
     Layout.maximumWidth: Layout.minimumWidth
     Layout.maximumHeight: Layout.minimumHeight
@@ -71,17 +72,15 @@ Item {
             highlightResizeDuration: 0
 
             delegate: Item {
-                id: appItem
                 width: parent.width
-                height: units.iconSizes.smallMedium + 2*mediumSpacing
+                height: itemHeight + 2*mediumSpacing
 
                 property bool isHovered: false
 
                 MouseArea {
-                    id: container
                     anchors.fill: parent
-
                     hoverEnabled: true
+
                     onEntered: {
                         listView.currentIndex = index
                         isHovered = true
@@ -89,20 +88,22 @@ Item {
                     onExited: {
                         isHovered = false
                     }
-
                     onClicked: {
                         plasmoid.expanded = false
                         kRun.openUrl(appsSource.data[modelData].entryPath)
                     }
 
-                    RowLayout {
+                    Row {
                         x: mediumSpacing
                         y: mediumSpacing
+                        width: parent.width - 2*mediumSpacing
+                        height: itemHeight
                         spacing: mediumSpacing
 
                         Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
                             height: units.iconSizes.smallMedium
                             width: height
+                            anchors.verticalCenter: parent.verticalCenter
 
                             PlasmaCore.IconItem {
                                 anchors.fill: parent
@@ -113,7 +114,9 @@ Item {
 
                         PlasmaComponents.Label {
                             text: appsSource.data[modelData].name
+                            width: parent.width - units.iconSizes.smallMedium - mediumSpacing
                             height: parent.height
+                            elide: Text.ElideRight
                             verticalAlignment: Text.AlignVCenter
                         }
                     }
