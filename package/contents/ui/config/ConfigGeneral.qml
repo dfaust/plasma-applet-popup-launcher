@@ -279,7 +279,7 @@ Item {
         id: iconDialog
         title: 'Please choose an image file'
         folder: '/usr/share/icons/breeze/'
-        nameFilters: [ 'Image files (*.png *.jpg *.xpm *.svg)', 'All files (*)' ]
+        nameFilters: ['Image files (*.png *.jpg *.xpm *.svg *.svgz)', 'All files (*)']
         onAccepted: {
             icon.text = iconDialog.fileUrl
         }
