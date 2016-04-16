@@ -28,6 +28,7 @@ Item {
         source: icon
         width: units.iconSizes.medium
         height: units.iconSizes.medium
+        active: mouseArea.containsMouse
 
         PlasmaCore.ToolTipArea {
             anchors.fill: parent
@@ -36,8 +37,10 @@ Item {
         }
 
         MouseArea {
+            id: mouseArea
             anchors.fill: parent
             onClicked: plasmoid.expanded = !plasmoid.expanded
+            hoverEnabled: true
         }
     }
 
