@@ -132,7 +132,15 @@ Dialog {
     }
 
     function listMenuEntries(menuId) {
-        for (var i = 0; i < appsSource.data[menuId].entries.length; i++) {
+        if (appsSource.data[menuId] === undefined) {
+            console.log("Error: Menu category " + menuId + " does not exist");
+            return;
+        }
+        if (appsSource.data[menuId].entries === undefined) {
+            console.log("Warning: Menu category " + menuId + " has no entries");
+            return;
+        }
+        for (var i = 0, length = appsSource.data[menuId].entries.length; i < length; i++) {
             var entry = appsSource.data[menuId].entries[i]
             if (/\.desktop$/.test(entry)) {
                 var category = (menuId == '/') ? '/' : menuId.slice(0, -1);
