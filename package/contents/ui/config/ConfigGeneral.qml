@@ -67,7 +67,7 @@ Item {
 
         ColumnLayout {
             Rectangle {
-                width: 200
+                width: 300
                 height: 200
                 border {
                     width: 1
@@ -87,7 +87,7 @@ Item {
                         delegate: Item {
                             id: appItem
                             width: parent.width
-                            height: units.iconSizes.small + 2*units.smallSpacing
+                            height: units.iconSizes.smallMedium + 2*units.smallSpacing
 
                             property bool isHovered: false
                             property bool isUpHovered: false
@@ -112,7 +112,7 @@ Item {
                                     y: units.smallSpacing
 
                                     Item { // Hack - since setting the dimensions of PlasmaCore.IconItem won't work
-                                        height: units.iconSizes.small
+                                        height: units.iconSizes.smallMedium
                                         width: height
 
                                         PlasmaCore.IconItem {
@@ -130,13 +130,13 @@ Item {
                                 }
 
                                 Rectangle {
-                                    height: units.iconSizes.small
-                                    width: 3*units.iconSizes.small + 4*units.smallSpacing
+                                    height: units.iconSizes.smallMedium
+                                    width: 3*units.iconSizes.smallMedium + 4*units.smallSpacing
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
                                     visible: isHovered
 
-                                    radius: units.iconSizes.small / 4
+                                    radius: units.iconSizes.smallMedium / 4
                                     color: theme.viewBackgroundColor
                                     opacity: 0.8
 
@@ -148,7 +148,7 @@ Item {
 
                                         Item {
                                             id: upIcon
-                                            height: units.iconSizes.small
+                                            height: units.iconSizes.smallMedium
                                             width: height
                                             opacity: 1.0
 
@@ -179,7 +179,7 @@ Item {
 
                                         Item {
                                             id: downIcon
-                                            height: units.iconSizes.small
+                                            height: units.iconSizes.smallMedium
                                             width: height
                                             opacity: 1.0
 
@@ -210,7 +210,7 @@ Item {
 
                                         Item {
                                             id: removeIcon
-                                            height: units.iconSizes.small
+                                            height: units.iconSizes.smallMedium
                                             width: height
                                             opacity: 1.0
 
