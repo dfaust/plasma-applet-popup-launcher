@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http: //www.gnu.org/licenses/>.
  */
 import QtQuick 2.2
+import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Dialog {
     id: appMenuDialog
@@ -41,7 +41,7 @@ Dialog {
         id: appsModel
     }
 
-    PlasmaExtras.ScrollArea {
+    ScrollView {
         width: parent.width
         height: 400
 
@@ -94,7 +94,7 @@ Dialog {
                             }
                         }
 
-                        PlasmaComponents.Label {
+                        Label {
                             text: appsSource.data[desktop].name
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
@@ -112,7 +112,7 @@ Dialog {
                     anchors.fill: parent
                     color: theme.complementaryBackgroundColor
 
-                    PlasmaComponents.Label {
+                    Label {
                         x: units.smallSpacing
                         y: 0
                         width: parent.width - 2*units.smallSpacing

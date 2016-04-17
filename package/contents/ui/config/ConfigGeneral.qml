@@ -19,7 +19,6 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
@@ -37,7 +36,7 @@ Item {
     GridLayout {
         columns: 2
 
-        PlasmaComponents.Label {
+        Label {
             text: i18n('Title:')
         }
 
@@ -45,7 +44,7 @@ Item {
             id: title
         }
 
-        PlasmaComponents.Label {
+        Label {
             text: i18n('Icon:')
         }
 
@@ -54,8 +53,8 @@ Item {
                 id: icon
             }
 
-            PlasmaComponents.Button {
-                iconSource: 'folder'
+            Button {
+                iconName: 'folder'
                 onClicked: {
                     iconDialog.open()
                 }
@@ -70,9 +69,14 @@ Item {
             Rectangle {
                 width: 200
                 height: 200
-                color: theme.viewBackgroundColor
+                border {
+                    width: 1
+                    color: "lightgrey"
+                }
+                radius: 2
+                color: "#20FFFFFF"
 
-                PlasmaExtras.ScrollArea {
+                ScrollView {
                     anchors.fill: parent
 
                     ListView {
@@ -118,7 +122,7 @@ Item {
                                         }
                                     }
 
-                                    PlasmaComponents.Label {
+                                    Label {
                                         text: appsSource.data[modelData].name
                                         height: parent.height
                                         verticalAlignment: Text.AlignVCenter
@@ -250,18 +254,18 @@ Item {
                 }
             }
         
-            PlasmaComponents.Button {
+            Button {
                 id: addAppButton
                 anchors.right: parent.right
                 text: i18n('Add application')
-                iconSource: 'list-add'
+                iconName: 'list-add'
                 onClicked: {
                     appMenuDialog.open()
                 }
             }        
         }
 
-        PlasmaComponents.Label {
+        Label {
             text: i18n('Widget width:')
         }
 
