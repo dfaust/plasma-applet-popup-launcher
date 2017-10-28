@@ -1,3 +1,6 @@
+1.2 (2017.10.28):
+Fix installation on newer KDE versions
+
 1.1 (2016.04.17):
 Visual feedback when hovered
 Fix some colors in the config dialog
