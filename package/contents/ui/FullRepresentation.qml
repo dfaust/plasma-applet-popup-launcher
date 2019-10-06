@@ -19,7 +19,7 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.kio 1.0 as Kio
+import org.kde.plasma.private.quicklaunch 1.0
 
 Item {
     property real mediumSpacing: 1.5*units.smallSpacing
@@ -54,7 +54,7 @@ Item {
         }
     }
     
-    Kio.KRun {
+    Logic {
         id: kRun
     }
 
@@ -90,7 +90,7 @@ Item {
                     }
                     onClicked: {
                         plasmoid.expanded = false
-                        kRun.openUrl(appsSource.data[modelData].entryPath)
+                        kRun.openUrl("file:" + appsSource.data[modelData].entryPath)
                     }
 
                     Row {
