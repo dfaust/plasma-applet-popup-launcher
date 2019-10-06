@@ -4,6 +4,10 @@ Plasma 5 custom application launcher that opens a popup when placed in a panel
 
 ![Screen shot of plasma-applet-popup-launcher](popup-launcher.png)
 
+Dependencies:
+
+* plasma-addons
+
 ## Installation
 
 ### From openDesktop.org
@@ -12,9 +16,17 @@ Plasma 5 custom application launcher that opens a popup when placed in a panel
 2. Click on the `Files` tab
 3. Click the `Install` button
 
+### From within the Plasma workspace
+
+1. If your widgets are locked, right-click the desktop and select `Unlock Widgets`
+2. Right-click the desktop and select `Add Widgets...`
+3. Click the `Get new widgets` button in the Widget Explorer that just opened
+4. Type `Popup Launcher` into the search field
+5. Click the `Install` button next to "Popup Launcher"
+
 ### From source
 
-```
+```sh
 git clone https://github.com/dfaust/plasma-applet-popup-launcher
 cd plasma-applet-popup-launcher
 mkdir build
