@@ -22,17 +22,15 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.private.quicklaunch 1.0
 
 Item {
-    property real mediumSpacing: 1.5*units.smallSpacing
+    property real mediumSpacing: 1.5 * units.smallSpacing
     property real itemHeight: Math.max(units.iconSizes.smallMedium, theme.defaultFont.pixelSize)
 
     Layout.minimumWidth: widgetWidth
-    Layout.minimumHeight: (itemHeight + 2*mediumSpacing) * listView.count
+    Layout.maximumWidth: widgetWidth
 
-    Layout.maximumWidth: Layout.minimumWidth
-    Layout.maximumHeight: Layout.minimumHeight
-
-    Layout.preferredWidth: Layout.minimumWidth
-    Layout.preferredHeight: Layout.minimumHeight
+    Layout.minimumHeight: itemHeight
+    Layout.preferredHeight: listView.count > 0 ? (itemHeight + 2 * mediumSpacing) * listView.count : itemHeight
+    Layout.maximumHeight: (itemHeight + 2 * mediumSpacing) * 15
 
     Component.onCompleted: {
         // trigger adding all sources already available
@@ -71,6 +69,10 @@ Item {
             highlightMoveDuration: 0
             highlightResizeDuration: 0
 
+            focus: true
+            keyNavigationWraps: true
+            highlightFollowsCurrentItem: true
+
             delegate: Item {
                 width: parent.width
                 height: itemHeight + 2*mediumSpacing
@@ -88,10 +90,7 @@ Item {
                     onExited: {
                         isHovered = false
                     }
-                    onClicked: {
-                        plasmoid.expanded = false
-                        kRun.openUrl("file:" + appsSource.data[modelData].entryPath)
-                    }
+                    onClicked: run()
 
                     Row {
                         x: mediumSpacing
@@ -122,6 +121,18 @@ Item {
                     }
                 }
             }
+
+            Keys.onReturnPressed: run()
         }
+
+    }
+
+    Keys.forwardTo: [listView]
+
+    function run() {
+        plasmoid.expanded = false
+
+        const entry = listView.model[listView.currentIndex];
+        kRun.openUrl("file:" + appsSource.data[entry].entryPath)
     }
 }

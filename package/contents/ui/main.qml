@@ -28,13 +28,15 @@ Item {
         source: icon
         width: units.iconSizes.medium
         height: units.iconSizes.medium
-        active: mouseArea.containsMouse
+        //active: mouseArea.containsMouse
 
+        /*
         PlasmaCore.ToolTipArea {
             anchors.fill: parent
             icon: parent.source
             mainText: title
         }
+        */
 
         MouseArea {
             id: mouseArea
@@ -45,7 +47,6 @@ Item {
     }
 
     Plasmoid.fullRepresentation: FullRepresentation {}
-
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
-//     Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
+    //Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 }

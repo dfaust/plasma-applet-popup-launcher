@@ -33,42 +33,75 @@ Item {
         connectedSources: sources
     }
     
-    GridLayout {
-        columns: 2
+    ColumnLayout {
+        anchors.fill: parent
 
-        Label {
-            text: i18n('Title:')
-        }
+        GroupBox {
+            title: i18n("Title")
+            Layout.fillWidth: true
 
-        TextField {
-            id: title
-        }
-
-        Label {
-            text: i18n('Icon:')
-        }
-
-        RowLayout {
             TextField {
-                id: icon
+                id: title
+                anchors.fill: parent
+                horizontalAlignment: TextInput.AlignHCenter
             }
+        }
+        GroupBox {
+            title: i18n("Icon")
+            Layout.fillWidth: true
 
-            Button {
-                iconName: 'folder'
-                onClicked: {
-                    iconDialog.open()
+            RowLayout {
+                anchors.fill: parent
+
+                TextField {
+                    id: icon
+                    Layout.fillWidth: true
+                    horizontalAlignment: TextInput.AlignHCenter
+                }
+
+                Button {
+                    iconName: "folder"
+                    onClicked: iconDialog.open()
                 }
             }
-        }
 
-        Label {
-            text: i18n('Applications:')
         }
+        GroupBox {
+            title: i18n("Widget width")
+            Layout.fillWidth: true
 
-        ColumnLayout {
+            SpinBox {
+                id: widgetWidth
+                anchors.centerIn: parent
+
+                minimumValue: units.iconSizes.medium + 2*units.smallSpacing
+                maximumValue: 1000
+                decimals: 0
+                stepSize: 10
+                suffix: ' px'
+            }
+        }
+        GroupBox {
+            title: i18n("Applications")
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            Button {
+                id: addAppButton
+                //text: i18n('Add')
+                //height: 30
+                iconName: "list-add"
+                onClicked: appSelector.open()
+            }
+
             Rectangle {
-                width: 300
-                height: 200
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                anchors.bottom: parent.bottom
+                anchors.top: addAppButton.bottom
+                anchors.topMargin: 10
+
                 border {
                     width: 1
                     color: "lightgrey"
@@ -253,29 +286,7 @@ Item {
                     }
                 }
             }
-        
-            Button {
-                id: addAppButton
-                anchors.right: parent.right
-                text: i18n('Add application')
-                iconName: 'list-add'
-                onClicked: {
-                    appMenuDialog.open()
-                }
-            }        
-        }
 
-        Label {
-            text: i18n('Widget width:')
-        }
-
-        SpinBox {
-            id: widgetWidth
-            minimumValue: units.iconSizes.medium + 2*units.smallSpacing
-            maximumValue: 1000
-            decimals: 0
-            stepSize: 10
-            suffix: ' px'
         }
     }
     
@@ -289,17 +300,20 @@ Item {
         }
     }
     
-    AppMenuDialog {
-        id: appMenuDialog
+    AppSelector {
+        id: appSelector
         onAccepted: {
-            var m = apps.model
-            m.push(selectedMenuId)
-            cfg_apps = m
-            apps.model = m
+            console.log("accepted", selectedMenuId);
+
+            const listModel = apps.model;
+            listModel.push(selectedMenuId);
+
+            cfg_apps = listModel;
+            apps.model = listModel;
         }
     }
 
-   function moveUp(m, value) {
+    function moveUp(m, value) {
         var index = m.indexOf(value)
         var newPos = index - 1
 
